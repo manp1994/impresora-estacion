@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Imprimiendo Ticket...</title>
+  <style>
+    body {
+      font-family: sans-serif; display: flex; flex-direction: column;
+      align-items: center; justify-content: center; min-height: 100vh;
+      margin: 0; padding: 20px; background: #f3f4f6; text-align: center;
+    }
+    .card {
+      background: #fff; padding: 24px; border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1); width: 100%; max-width: 360px;
+    }
+    .btn {
+      display: block; width: 100%; padding: 16px 0; margin-top: 16px;
+      background: #16A34A; color: #fff; font-size: 18px; font-weight: bold;
+      text-decoration: none; border-radius: 8px; border: none; cursor: pointer;
+    }
+    .btn-sec {
+      background: #6B7280; margin-top: 10px; font-size: 15px; padding: 12px 0;
+    }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <h2 style="margin-top:0;">🖨️ Ticket Listo</h2>
+    <p id="estado" style="color:#4B5563;">Enviando a RawBT...</p>
+    <a id="btnImprimir" class="btn" href="#">IMPRIMIR TICKET DOBLE</a>
+    <button class="btn btn-sec" onclick="window.close()">Volver a Caja</button>
+  </div>
+
+  <script>
+    const params = new URLSearchParams(window.location.search);
+    const data = params.get("d");
+
+    if (data) {
+      const intentUrl = "intent:base64," + data + "#Intent;scheme=rawbt;package=ru.a402d.rawbtprinter;end;";
+      document.getElementById("btnImprimir").href = intentUrl;
+
+      // Intenta disparar RawBT automáticamente al abrir
+      window.location.href = intentUrl;
+    } else {
+      document.getElementById("estado").innerText = "No se recibieron datos del ticket.";
+      document.getElementById("btnImprimir").style.display = "none";
+    }
+  </script>
+</body>
+</html>
