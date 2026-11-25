@@ -54,7 +54,7 @@
           .replace(/\x1B@/g, "")
           .replace(/\x1B[aE]./g, "")
           .replace(/\x1D!./g, "")
-          .replace(/\x1DV../g, "\n___CORTE___\n")
+          .replace(/\x1DV../g, "\n___CORTE___\n\n\n")
           .replace(/[^\x0A\x20-\x7E]/g, "")
           .replace(/___CORTE___/g, "--------- ✂️ CORTE DE PAPEL ✂️ ---------");
         box.textContent = limpio.trim() || "(Ticket vacío tras limpiar comandos)";
