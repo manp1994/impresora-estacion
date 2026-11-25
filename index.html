@@ -51,15 +51,18 @@
       try {
         const raw = atob(base64Limpio);
         const limpio = raw
-          .replace(/\x1B[@aE].?/g, "")
-          .replace(/\x1D[!V]..?/g, "")
-          .replace(/[^\x0A\x20-\x7E]/g, "");
+          .replace(/\x1B@/g, "")
+          .replace(/\x1B[aE]./g, "")
+          .replace(/\x1D!./g, "")
+          .replace(/\x1DV../g, "\n___CORTE___\n")
+          .replace(/[^\x0A\x20-\x7E]/g, "")
+          .replace(/___CORTE___/g, "--------- ✂️ CORTE DE PAPEL ✂️ ---------");
         box.textContent = limpio.trim() || "(Ticket vacío tras limpiar comandos)";
       } catch (e) {
-        box.textContent = "Error decodificando: " + e.message + "\n\nDato recibido:\n" + data.substring(0, 120);
+        box.textContent = "Error decodificando: " + e.message;
       }
 
-      // Salto automático desactivado temporalmente para revisar la vista previa:
+      // Cuando conectes la impresora física, quita las // de abajo para imprimir automático:
       // window.location.href = intentUrl;
     } else {
       document.getElementById("estado").innerText = "No se recibieron datos del ticket.";
