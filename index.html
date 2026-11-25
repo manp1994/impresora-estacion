@@ -31,7 +31,7 @@
 <body>
   <div class="card">
     <h2 style="margin:0 0 8px 0;">🖨️ Ticket Listo</h2>
-    <p id="estado" style="color:#4B5563; margin:0 0 12px 0;">Enviando a RawBT...</p>
+    <p id="estado" style="color:#4B5563; margin:0 0 12px 0;">Vista previa lista</p>
     <a id="btnImprimir" class="btn" href="#">IMPRIMIR TICKET DOBLE</a>
     <button class="btn btn-sec" onclick="window.close()">Volver a Caja</button>
     <div id="vistaPrevia" class="preview" style="display:none;"></div>
@@ -57,12 +57,7 @@
         box.style.display = "block";
       } catch (e) {}
 
-      // Dispara RawBT automáticamente
-      window.location.href = intentUrl;
+      // Salto automático desactivado temporalmente para revisar la vista previa:
+      // window.location.href = intentUrl;
     } else {
-      document.getElementById("estado").innerText = "No se recibieron datos del ticket.";
-      document.getElementById("btnImprimir").style.display = "none";
-    }
-  </script>
-</body>
-</html>
+      document.getElementById("estado").innerText = "
