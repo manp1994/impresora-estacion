@@ -44,7 +44,7 @@
 
     if (data) {
       const base64Limpio = data.replace(/ /g, "+");
-      const intentUrl = "intent:base64," + encodeURIComponent(base64Limpio) + "#Intent;scheme=rawbt;package=ru.a402d.rawbtprinter;end;";
+      const intentUrl = "intent:base64," + base64Limpio + "#Intent;scheme=rawbt;package=ru.a402d.rawbtprinter;end;";
       document.getElementById("btnImprimir").href = intentUrl;
 
       box.style.display = "block";
@@ -62,7 +62,7 @@
         box.textContent = "Error decodificando: " + e.message;
       }
 
-      // Cuando conectes la impresora física, quita las // de abajo para imprimir automático:
+      // Cuando conectes la impresora física y quieras impresión directa sin vista previa, quita las // de abajo:
       // window.location.href = intentUrl;
     } else {
       document.getElementById("estado").innerText = "No se recibieron datos del ticket.";
