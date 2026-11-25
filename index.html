@@ -40,24 +40,31 @@
   <script>
     const params = new URLSearchParams(window.location.search);
     const data = params.get("d");
+    const box = document.getElementById("vistaPrevia");
 
     if (data) {
-      const intentUrl = "intent:base64," + data + "#Intent;scheme=rawbt;package=ru.a402d.rawbtprinter;end;";
+      const base64Limpio = data.replace(/ /g, "+");
+      const intentUrl = "intent:base64," + encodeURIComponent(base64Limpio) + "#Intent;scheme=rawbt;package=ru.a402d.rawbtprinter;end;";
       document.getElementById("btnImprimir").href = intentUrl;
 
-      // Decodifica y limpia los comandos ESC/POS solo para mostrar la vista previa en pantalla
+      box.style.display = "block";
       try {
-        const raw = atob(data);
+        const raw = atob(base64Limpio);
         const limpio = raw
           .replace(/\x1B[@aE].?/g, "")
           .replace(/\x1D[!V]..?/g, "")
           .replace(/[^\x0A\x20-\x7E]/g, "");
-        const box = document.getElementById("vistaPrevia");
-        box.textContent = limpio.trim();
-        box.style.display = "block";
-      } catch (e) {}
+        box.textContent = limpio.trim() || "(Ticket vacío tras limpiar comandos)";
+      } catch (e) {
+        box.textContent = "Error decodificando: " + e.message + "\n\nDato recibido:\n" + data.substring(0, 120);
+      }
 
       // Salto automático desactivado temporalmente para revisar la vista previa:
       // window.location.href = intentUrl;
     } else {
-      document.getElementById("estado").innerText = "
+      document.getElementById("estado").innerText = "No se recibieron datos del ticket.";
+      document.getElementById("btnImprimir").style.display = "none";
+    }
+  </script>
+</body>
+</html>
